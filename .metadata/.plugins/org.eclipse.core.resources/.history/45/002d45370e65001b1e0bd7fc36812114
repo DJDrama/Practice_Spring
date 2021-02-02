@@ -1,0 +1,5 @@
+package com.dj.practice.ui.controller;
+
+public class UserController {
+
+}
