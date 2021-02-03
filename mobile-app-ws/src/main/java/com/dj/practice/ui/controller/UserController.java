@@ -1,8 +1,6 @@
 package com.dj.practice.ui.controller;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.validation.Valid;
 
@@ -20,12 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dj.practice.ui.exceptions.UserServiceException;
 import com.dj.practice.ui.model.request.UpdateUserDetailsRequestModel;
 import com.dj.practice.ui.model.request.UserDetailsRequestModel;
 import com.dj.practice.ui.model.response.UserRest;
 import com.dj.practice.userservice.UserService;
-import com.dj.practice.userservice.impl.UserServiceImpl;
 
 @RestController
 @RequestMapping("users") // http://localhost:8080/users
