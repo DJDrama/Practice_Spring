@@ -14,17 +14,46 @@ import com.dj.practice.ui.model.response.ErrorMessage;
 
 @ControllerAdvice
 public class AppExceptionsHandler extends ResponseEntityExceptionHandler {
-	@ExceptionHandler(value = {Exception.class})
-	public ResponseEntity<Object> handleAnyException(Exception ex, WebRequest request){
-		
+	
+	@ExceptionHandler(value = { Exception.class })
+	public ResponseEntity<Object> handleAnyException(Exception ex, WebRequest request) {
+
 		String errorMessageDesc = ex.getLocalizedMessage();
-		
-		if(errorMessageDesc == null) {
+
+		if (errorMessageDesc == null) {
 			errorMessageDesc = ex.toString();
 		}
 		ErrorMessage errorMessage = new ErrorMessage(new Date(), errorMessageDesc);
-		
+
 		return new ResponseEntity<>(errorMessage, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	@ExceptionHandler(value = { NullPointerException.class })
+	public ResponseEntity<Object> handleNullPointerException(NullPointerException ex, WebRequest request) {
+
+		String errorMessageDesc = ex.getLocalizedMessage();
+
+		if (errorMessageDesc == null) {
+			errorMessageDesc = ex.toString();
+		}
+		ErrorMessage errorMessage = new ErrorMessage(new Date(), errorMessageDesc);
+
+		return new ResponseEntity<>(errorMessage, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	
+	/** Custom Exception Testing **/
+	@ExceptionHandler(value = { UserServiceException.class })
+	public ResponseEntity<Object> handleUserServiceException(UserServiceException ex, WebRequest request) {
+
+		String errorMessageDesc = ex.getLocalizedMessage();
+
+		if (errorMessageDesc == null) {
+			errorMessageDesc = ex.toString();
+		}
+		ErrorMessage errorMessage = new ErrorMessage(new Date(), errorMessageDesc);
+
+		return new ResponseEntity<>(errorMessage, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
 }
