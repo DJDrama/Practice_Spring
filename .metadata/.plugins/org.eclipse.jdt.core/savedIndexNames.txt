@@ -56,7 +56,6 @@ INDEX VERSION 1.131+/Users/dj/Desktop/toyproject/Practice_Spring/.metadata/.plug
 3777591657.index
 3015074335.index
 3301672820.index
-948764264.index
 1694059482.index
 2781424585.index
 3267993472.index
