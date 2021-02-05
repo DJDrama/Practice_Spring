@@ -24,10 +24,11 @@ public class UserEntity implements Serializable {
 	private String lastName;
 	@Column(nullable=false, length=120, unique=true)
 	private String email;
-	@Column(nullable=false, length=50)
-	private String password;
 
+	@Column(nullable=false, unique=true)
 	private String userId;
+	
+	@Column(nullable=false, unique=true)
 	private String encryptedPassword;
 	
 
@@ -63,13 +64,7 @@ public class UserEntity implements Serializable {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
-	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
 	public String getUserId() {
 		return userId;
