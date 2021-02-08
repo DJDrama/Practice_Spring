@@ -30,7 +30,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		// jwt token
 		http.csrf().disable();
-		http.authorizeRequests().antMatchers("/users/**").permitAll().and().addFilter(getAuthenticationFilter());
+		http.authorizeRequests().antMatchers("/users/**").permitAll().and()
+		.addFilter(getAuthenticationFilter()); // custom quthenticatino filter
 		// only for my ip address
 		// http.authorizeRequests().antMatchers("/**").hasIpAddress(environment.getProperty("gateway.ip"));
 
@@ -41,6 +42,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	private AuthenticationFilter getAuthenticationFilter() throws Exception {
 		AuthenticationFilter authFilter = new AuthenticationFilter(userService, environment, authenticationManager());
 		//authFilter.setAuthenticationManager(authenticationManager());
+		
+		// custom login path
+		authFilter.setFilterProcessesUrl(environment.getProperty("login.url.path"));
 		return authFilter;
 	}
 
