@@ -29,10 +29,9 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
 	private UsersService usersService;
 	private Environment environment;
-	
-	
-	
-	public AuthenticationFilter(UsersService usersService, Environment environment, AuthenticationManager authenticationManager) {
+
+	public AuthenticationFilter(UsersService usersService, Environment environment,
+			AuthenticationManager authenticationManager) {
 		super.setAuthenticationManager(authenticationManager);
 		this.usersService = usersService;
 		this.environment = environment;
@@ -44,8 +43,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 		try {
 			LoginRequestModel cred = new ObjectMapper().readValue(req.getInputStream(), LoginRequestModel.class);
 
-			return getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(cred.getEmail(), cred.getPassword(),
-					new ArrayList<>()));
+			return getAuthenticationManager().authenticate(
+					new UsernamePasswordAuthenticationToken(cred.getEmail(), cred.getPassword(), new ArrayList<>()));
 
 		} catch (IOException e) {
 			throw new RuntimeException(e);
@@ -57,17 +56,15 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 			Authentication auth) throws IOException, ServletException {
 		String username = ((User) auth.getPrincipal()).getUsername();
 		UserDto userDetails = usersService.getUserDetailsByEmail(username);
-		
+
 		// Generate secure web token
-		String token = Jwts.builder()
-				.setSubject(userDetails.getUserId())
-				.setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(environment.getProperty("token.expiration_time"))))
-				.signWith(SignatureAlgorithm.HS512, environment.getProperty("token.secret"))
-				.compact();
-		
+		String token = Jwts.builder().setSubject(userDetails.getUserId())
+				.setExpiration(new Date(
+						System.currentTimeMillis() + Long.parseLong(environment.getProperty("token.expiration_time"))))
+				.signWith(SignatureAlgorithm.HS512, environment.getProperty("token.secret")).compact();
+
 		res.addHeader("token", token);
 		res.addHeader("userId", userDetails.getUserId());
 	}
-	
 
 }
