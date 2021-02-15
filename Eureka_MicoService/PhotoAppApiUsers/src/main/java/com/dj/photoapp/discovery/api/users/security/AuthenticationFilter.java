@@ -58,7 +58,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 		UserDto userDetails = usersService.getUserDetailsByEmail(username);
 
 		// Generate secure web token
-		String token = Jwts.builder().setSubject(userDetails.getUserId())
+		String token = Jwts.builder()
+				.setSubject(userDetails.getUserId())
 				.setExpiration(new Date(
 						System.currentTimeMillis() + Long.parseLong(environment.getProperty("token.expiration_time"))))
 				.signWith(SignatureAlgorithm.HS512, environment.getProperty("token.secret")).compact();
